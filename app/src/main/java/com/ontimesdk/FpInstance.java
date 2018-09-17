@@ -48,6 +48,8 @@ public class FpInstance {
                     mFpSdk.cancel();
                     mFpSdk.onResume();
                     mFpSdk.openSdk();
+                } else {
+                    mfpSdk.onDeviceOpen();
                 }
             }
         };
