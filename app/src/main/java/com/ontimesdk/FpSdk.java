@@ -135,7 +135,10 @@ public class FpSdk {
      */
     public void generateTemplate1() {
         if (fpm.GenerateTemplate(1)) worktype = 0;
-        else mFpSdk.onStatusChange("Busy");
+        else {
+            mFpSdk.onStatusChange("Please wait...");
+            mFpSdk.onBusy();
+        }
     }
 
     /**
@@ -143,7 +146,10 @@ public class FpSdk {
      */
     public void generateTemplate4() {
         if (fpm.GenerateTemplate(4)) worktype = 1;
-        else mFpSdk.onStatusChange("Busy");
+        else {
+            mFpSdk.onStatusChange("Please wait...");
+            mFpSdk.onBusy();
+        }
     }
 
     private void initHandler() {
@@ -259,6 +265,7 @@ public class FpSdk {
 
         void onFingerGenerateFail();
 
+        void onBusy();
         //void deviceType(String deviceType);
 
     }
