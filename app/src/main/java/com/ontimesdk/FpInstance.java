@@ -7,7 +7,6 @@ public class FpInstance {
     private FpSdk mFpSdk = null;
     private Activity mContext;
     private FpSdk.IFpSdk mfpSdk;
-    public boolean isOpening = false;
 
     private static FpInstance instance;
 
