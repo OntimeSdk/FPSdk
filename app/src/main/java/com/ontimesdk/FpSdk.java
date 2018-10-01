@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class FpSdk {
 
+
     private FPModule fpm = new FPModule();
     private byte bmpdata[] = new byte[Constants.RESBMP_SIZE];
     private int worktype = 0;
@@ -248,6 +249,15 @@ public class FpSdk {
     public int MatchTemplate(byte[] fingerInBytes, int length, byte[] matdata, int length1) {
         return fpm.MatchTemplate(fingerInBytes, length, matdata, length1);
     }
+
+    public boolean matchTemplate(byte[] fingerInBytes, int length, byte[] matdata, int length1, int score) {
+        return fpm.MatchTemplate(fingerInBytes,length, matdata,length1,score);
+    }
+
+    public FPModule getFpModule() {
+        return fpm;
+    }
+
 
     public interface IFpSdk {
 

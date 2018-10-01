@@ -50,6 +50,7 @@ public class FpInstance {
                 } else {
                     mfpSdk.onDeviceOpen();
                 }
+
             }
         };
 
