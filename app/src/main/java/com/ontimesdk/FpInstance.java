@@ -45,12 +45,10 @@ public class FpInstance {
             @Override
             public void run() {
                 if (isClosed && mFpSdk != null) {
-                    Log.d("CancelIssue", "start in if");
                     mFpSdk.cancel();
                     mFpSdk.onResume();
                     mFpSdk.openSdk();
                 } else {
-                    Log.d("CancelIssue", "start in else");
                     mfpSdk.onDeviceOpen();
                 }
 
@@ -62,7 +60,6 @@ public class FpInstance {
             @Override
             public void run() {
                 if (isOpened && mFpSdk != null) {
-                    Log.d("CancelIssue", "close in if");
                     mFpSdk.cancel();
                     mFpSdk.onPause();
                     mFpSdk.closeSdk();
@@ -101,14 +98,14 @@ public class FpInstance {
             mStopSdkHandler.removeCallbacks(mStopSdkunnable);
         }
 
-        mStartSdkHandler.postDelayed(mStartSdkunnable, 2000);
+        mStartSdkHandler.postDelayed(mStartSdkunnable, 1000);
     }
 
     public void stopSdkHandler() {
         if (mStartSdkHandler != null & mStartSdkHandler != null) {
             mStartSdkHandler.removeCallbacks(mStartSdkunnable);
         }
-        mStopSdkHandler.postDelayed(mStopSdkunnable, 2000);
+        mStopSdkHandler.postDelayed(mStopSdkunnable, 1000);
     }
 
     public void restartSdk() {
