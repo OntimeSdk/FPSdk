@@ -44,7 +44,7 @@ public class FpInstance {
         mStartSdkunnable = new Runnable() {
             @Override
             public void run() {
-                Log.d("CancelIssue","\"isClosed && mFpSdk = \" + isClosed + \" && \" + mFpSdk != null");
+                Log.d("CancelIssue", String.valueOf("isClosed && mFpSdk = " + isClosed + " && " + mFpSdk != "null"));
                 if (isClosed && mFpSdk != null) {
                     mFpSdk.cancel();
                     mFpSdk.onResume();
@@ -60,7 +60,7 @@ public class FpInstance {
         mStopSdkunnable = new Runnable() {
             @Override
             public void run() {
-                Log.d("CancelIssue","\"isOpened && mFpSdk = \" + isOpened + \" && \" + mFpSdk != null");
+                Log.d("CancelIssue", String.valueOf("isOpened && mFpSdk = " + isOpened + " && " + mFpSdk != "null"));
                 if (isOpened && mFpSdk != null) {
                     mFpSdk.cancel();
                     mFpSdk.onPause();
