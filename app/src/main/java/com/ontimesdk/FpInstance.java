@@ -2,7 +2,6 @@ package com.ontimesdk;
 
 import android.app.Activity;
 import android.os.Handler;
-import android.util.Log;
 
 public class FpInstance {
     private FpSdk mFpSdk = null;
@@ -49,7 +48,7 @@ public class FpInstance {
                     mFpSdk.onResume();
                     mFpSdk.openSdk();
                 } else {
-                    mfpSdk.onDeviceOpen();
+                    //mfpSdk.onDeviceOpen();
                 }
 
             }
