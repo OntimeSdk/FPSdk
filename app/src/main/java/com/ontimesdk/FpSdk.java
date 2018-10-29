@@ -304,6 +304,7 @@ public class FpSdk {
 
         void onBusy();
         //void deviceType(String deviceType);
+        void onAlreadyOpen();
 
     }
 
