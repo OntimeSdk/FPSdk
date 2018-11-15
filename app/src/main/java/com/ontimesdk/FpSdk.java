@@ -252,7 +252,7 @@ public class FpSdk {
     }
 
     public boolean matchTemplate(byte[] fingerInBytes, int length, byte[] matdata, int length1, int score) {
-        return fpm.MatchTemplate(fingerInBytes,length, matdata,length1,score);
+        return fpm.MatchTemplate(fingerInBytes, length, matdata, length1, score);
     }
 
     public FPModule getFpModule() {
@@ -279,10 +279,10 @@ public class FpSdk {
         }
         return false;
     }
-  /*  public boolean isSdkOpen(){
-        fpm.
+
+    public void isSdkOpen() {
+
     }
-*/
 
     public interface IFpSdk {
 
@@ -303,6 +303,7 @@ public class FpSdk {
         void onFingerGenerateFail();
 
         void onBusy();
+
         //void deviceType(String deviceType);
         void onAlreadyOpen();
 
