@@ -136,7 +136,7 @@ public class FpSdk {
      * Ready to listen 1 fingerprint.
      */
     public void generateTemplate1() {
-        cancel();
+        //cancel();
         if (fpm.GenerateTemplate(1)) worktype = 0;
         else {
             mFpSdk.onStatusChange("Please wait...");
@@ -148,7 +148,7 @@ public class FpSdk {
      * Ready to listen 4 fingerprints.
      */
     public void generateTemplate4() {
-        cancel();
+        //cancel();
         if (fpm.GenerateTemplate(4)) worktype = 1;
         else {
             mFpSdk.onStatusChange("Please wait...");
@@ -280,8 +280,8 @@ public class FpSdk {
         return false;
     }
 
-    public void isSdkOpen() {
-
+    public boolean isSdkOpen() {
+        return fpm.getIsOpening();
     }
 
     public interface IFpSdk {

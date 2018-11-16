@@ -43,13 +43,26 @@ public class FpInstance {
         mStartSdkunnable = new Runnable() {
             @Override
             public void run() {
-                if (isClosed && mFpSdk != null) {
+                if (mFpSdk != null) {
+                    if (!mFpSdk.isSdkOpen()) {
+                        mFpSdk.cancel();
+                        mFpSdk.onResume();
+                        mFpSdk.openSdk();
+                    } else {
+                        mfpSdk.onAlreadyOpen();
+                    }
+                } else {
+                    mFpSdk = GetFpSdk();
+                    mFpSdk.onResume();
+                    mFpSdk.openSdk();
+                }
+                /*if (isClosed && mFpSdk != null) {
                     mFpSdk.cancel();
                     mFpSdk.onResume();
                     mFpSdk.openSdk();
                 } else {
                     mfpSdk.onAlreadyOpen();
-                }
+                }*/
 
             }
         };
@@ -58,11 +71,25 @@ public class FpInstance {
         mStopSdkunnable = new Runnable() {
             @Override
             public void run() {
-                if (isOpened && mFpSdk != null) {
-                    mFpSdk.cancel();
+
+                if (mFpSdk != null) {
+                    if (mFpSdk.isSdkOpen()) {
+                        mFpSdk.cancel();
+                        mFpSdk.onPause();
+                        mFpSdk.closeSdk();
+                    } else {
+                        //mfpSdk.onAlreadyOpen();
+                    }
+                } else {
+                    mFpSdk = GetFpSdk();
                     mFpSdk.onPause();
                     mFpSdk.closeSdk();
                 }
+               /* if (isOpened && mFpSdk != null) {
+                    mFpSdk.cancel();
+                    mFpSdk.onPause();
+                    mFpSdk.closeSdk();
+                }*/
             }
         };
     }
