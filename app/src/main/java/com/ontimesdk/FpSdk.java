@@ -195,7 +195,7 @@ public class FpSdk {
                             } else {
                                 byte refdata[] = new byte[Constants.TEMPLATESIZE * 4];
                                 fpm.GetTemplateByGen(refdata);
-                                mFpSdk.onFpDetected(refdata);
+                                mFpSdk.onFpEnroll(refdata);
                             }
                         } else {
                             mFpSdk.onStatusChange("Generate Template Fail");
@@ -289,6 +289,8 @@ public class FpSdk {
         void onStatusChange(String status);
 
         void onFpDetected(byte[] metadata);
+
+        void onFpEnroll(byte[] metadata);
 
         void showPlaceFinger();
 
