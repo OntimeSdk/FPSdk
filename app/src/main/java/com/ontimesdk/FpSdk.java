@@ -130,6 +130,7 @@ public class FpSdk {
     public void cancel() {
         fpm.Cancle();
         mFpSdk.onStatusChange("Cancel");
+        mFpSdk.onCancel();
     }
 
     /**
@@ -308,6 +309,8 @@ public class FpSdk {
 
         //void deviceType(String deviceType);
         void onAlreadyOpen();
+
+        void onCancel();
 
     }
 
