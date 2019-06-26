@@ -57,7 +57,7 @@ public class FpSdk {
         intent = new Intent();
     }
 
-    public void SetContext(Activity activityContext, IFpSdk fpSdk) {
+    public void setCallbacks(IFpSdk fpSdk) {
         mFpSdk = fpSdk;
         //fpm.SetContextHandler(activityContext, mHandler);
     }
@@ -130,7 +130,7 @@ public class FpSdk {
     public void cancel() {
         fpm.Cancle();
         mFpSdk.onStatusChange("Cancel");
-        mFpSdk.onCancel();
+        mFpSdk.onProcessCanceled();
     }
 
     /**
@@ -182,7 +182,11 @@ public class FpSdk {
                         }
                         break;
                     case Constants.FPM_PLACE:
-                        mFpSdk.showPlaceFinger();
+                        if (worktype == 0) {
+                            mFpSdk.showPlaceFinger();
+                        } else {
+                            mFpSdk.showPlaceFingerEnroll();
+                        }
                         break;
                     case Constants.FPM_LIFT:
                         mFpSdk.onStatusChange("Lift Finger");
@@ -219,7 +223,11 @@ public class FpSdk {
                     case Constants.FPM_NEWIMAGE: {
                         fpm.GetBmpImage(bmpdata);
                         Bitmap bmp = BitmapFactory.decodeByteArray(bmpdata, 0, bmpdata.length);
-                        mFpSdk.showLiftFinger(bmp);
+                        if (worktype == 0) {
+                            mFpSdk.showLiftFinger(bmp);
+                        } else {
+                            mFpSdk.showLiftFingerEnroll(bmp);
+                        }
                     }
                     break;
                     case Constants.FPM_TIMEOUT:
@@ -297,6 +305,10 @@ public class FpSdk {
 
         void showLiftFinger(Bitmap bmp);
 
+        void showPlaceFingerEnroll();
+
+        void showLiftFingerEnroll(Bitmap bmp);
+
         void onDeviceOpen();
 
         void onDeviceFail(String error);
@@ -310,7 +322,7 @@ public class FpSdk {
         //void deviceType(String deviceType);
         void onAlreadyOpen();
 
-        void onCancel();
+        void onProcessCanceled();
 
     }
 

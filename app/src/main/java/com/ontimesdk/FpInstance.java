@@ -3,10 +3,14 @@ package com.ontimesdk;
 import android.app.Activity;
 import android.os.Handler;
 
+import com.fgtit.fpcore.FPMatch;
+
+import java.nio.ByteBuffer;
+
 public class FpInstance {
     private FpSdk mFpSdk = null;
     private Activity mContext;
-    private FpSdk.IFpSdk mfpSdk;
+    private FpSdk.IFpSdk iFpCallbacks;
 
     private static FpInstance instance;
 
@@ -17,20 +21,20 @@ public class FpInstance {
         return instance;
     }
 
-    public void SetContext(Activity activityContext, FpSdk.IFpSdk fpSdk) {
-        mfpSdk = fpSdk;
+    public void SetContext(Activity activityContext, FpSdk.IFpSdk fpCallbacks) {
+        iFpCallbacks = fpCallbacks;
         mContext = activityContext;
         if (mFpSdk == null) {
-            mFpSdk = new FpSdk(mContext, mfpSdk);
+            mFpSdk = new FpSdk(mContext, iFpCallbacks);
             intiFpSet();
         } else {
-            mFpSdk.SetContext(mContext, mfpSdk);
+            mFpSdk.setCallbacks(iFpCallbacks);
         }
     }
 
     public FpSdk GetFpSdk() {
         if (mFpSdk == null) {
-            mFpSdk = new FpSdk(mContext, mfpSdk);
+            mFpSdk = new FpSdk(mContext, iFpCallbacks);
             intiFpSet();
         }
         return mFpSdk;
@@ -49,7 +53,7 @@ public class FpInstance {
                         mFpSdk.onResume();
                         mFpSdk.openSdk();
                     } else {
-                        mfpSdk.onAlreadyOpen();
+                        iFpCallbacks.onAlreadyOpen();
                     }
                 } else {
                     mFpSdk = GetFpSdk();
@@ -136,6 +140,49 @@ public class FpInstance {
 
     public void restartSdk() {
         GetFpSdk().cancel();
+    }
 
+    public void enrollFinger() {
+        mFpSdk.generateTemplate4();
+    }
+
+    public void scanFinger() {
+        mFpSdk.generateTemplate1();
+    }
+
+    public boolean matchFinger(byte[] dbFinger1, byte[] dbFinger2, byte[] detectedFinger, int matchScore) {
+        byte[] dbFinger;
+        if (dbFinger1 != null && dbFinger2 != null) {
+            byte[] tempByte = new byte[2048];
+            ByteBuffer buff = ByteBuffer.wrap(tempByte);
+            buff.put(dbFinger1);
+            buff.put(dbFinger2);
+            dbFinger = buff.array();
+        } else {
+            if (dbFinger1 != null) {
+                dbFinger = dbFinger1;
+            } else {
+                dbFinger = dbFinger2;
+            }
+        }
+
+        if (dbFinger == null || dbFinger.length == 0) {
+            return false;
+        }
+        int n = dbFinger.length / 256;
+        int m = detectedFinger.length / 256;
+        byte[] tmpEnl = new byte[256];
+        byte[] tmpMat = new byte[256];
+
+        for (int j = 0; j < m; j++) {
+            System.arraycopy(detectedFinger, j * 256, tmpMat, 0, 256);
+            for (int i = 0; i < n; i++) {
+                System.arraycopy(dbFinger, i * 256, tmpEnl, 0, 256);
+                if (FPMatch.getInstance().MatchTemplate(tmpEnl, tmpMat) >= matchScore) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
