@@ -185,4 +185,25 @@ public class FpInstance {
         }
         return false;
     }
+
+    public boolean matchTemplateFull(byte[] piEnl, byte[] piMat, int tempMatchScore) {
+        if (piEnl == null || piEnl.length == 0) {
+            return false;
+        }
+        int n = piEnl.length / 256;
+        int m = piMat.length / 256;
+        byte[] tmpEnl = new byte[256];
+        byte[] tmpMat = new byte[256];
+
+        for (int j = 0; j < m; j++) {
+            System.arraycopy(piMat, j * 256, tmpMat, 0, 256);
+            for (int i = 0; i < n; i++) {
+                System.arraycopy(piEnl, i * 256, tmpEnl, 0, 256);
+                if (FPMatch.getInstance().MatchTemplate(tmpEnl, tmpMat) >= tempMatchScore) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
