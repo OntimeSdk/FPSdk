@@ -124,14 +124,14 @@ public class FpInstance {
             mStopSdkHandler.removeCallbacks(mStopSdkunnable);
         }
 
-        mStartSdkHandler.postDelayed(mStartSdkunnable, 1000);
+        mStartSdkHandler.postDelayed(mStartSdkunnable, 5000);
     }
 
     public void stopSdkHandler() {
         if (mStartSdkHandler != null & mStartSdkHandler != null) {
             mStartSdkHandler.removeCallbacks(mStartSdkunnable);
         }
-        mStopSdkHandler.postDelayed(mStopSdkunnable, 1000);
+        mStopSdkHandler.postDelayed(mStopSdkunnable, 5000);
     }
 
     public void restartSdk() {
